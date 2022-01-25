@@ -54,4 +54,4 @@ Next you need to configure the dependencies inside your package.json in your ser
   }
 }
 ```
-After copy the dependencies in your file, please run npm install in your terminal so Node can install all the packages. 
+After copy the dependencies in your file, please run `npm install` in your terminal so Node can install all the packages. 

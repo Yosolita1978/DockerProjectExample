@@ -31,7 +31,7 @@ pgClient.on("connect", (client)=> {
 
 // Basic Express routes definitions
 app.get("/", (req, res) =>{
-    res.send("Hello, putho el que lo lea");
+    res.send("Hello, here is the get request");
 });
 
 //Endpoint to get all the values in the data

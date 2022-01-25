@@ -1,24 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Routers, Route, Link } from 'react-router-dom';
+import YourComponent from './YourComponent';
+import MainComponent from './MainComponent';
+import { Fragment } from 'react';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <Routers>
+      {/* //* Define the routes for your header / This links will be always present if they are in the header */}
+      <Fragment>
+      <header className='header'>
+        <div>This is a multicontainer application template</div>
+        <Link to="/">Home</Link>
+        <Link to="/othercomponent">Other page</Link>
       </header>
-    </div>
+      {/* Create the routes for those links that you put in the header */}
+      <Route exact path="/" component={MainComponent}/>
+      <Route path="/othercomponent" component={YourComponent}/>
+      </Fragment>
+    </Routers>
+    
   );
 }
 
