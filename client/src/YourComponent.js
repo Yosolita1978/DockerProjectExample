@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 const YourComponent = () => {
     // This is just another component that you probably will use
     return (
@@ -7,9 +5,6 @@ const YourComponent = () => {
         I'm another page| component
         <br />
         <br />
-
-        <Link to="/">Go back to home</Link>
-
     </div>
     );
 };

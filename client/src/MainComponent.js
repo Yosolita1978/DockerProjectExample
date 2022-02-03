@@ -4,53 +4,60 @@ import './MainComponent.css';
 
 const MainComponent = () => {
     //This component will have all the business logic for your App */
-    const [values, setValues] = useState([]);
-    const [value, setValue] = useState("");
-    
-    const getAllNumbers = useCallback( async () => {
-        const values = await axios.get('/api/values/all');
-        setValues();
-        
-    }, []);
+    const [list, setList] = useState(true);
+  const [card, setCard] = useState(false);
+  const [players, setPlayers] = useState([]);
+  const [player, setPlayer] = useState({});
 
-    // we will use nginx to redirect it to the proper URL
-    const saveNumber = useCallback(
-        async event => {
-          event.preventDefault();
-    
-          await axios.post("/api/values", {
-            value
-          });
-    
-          setValue("");
-          getAllNumbers();
-        },
-        [value, getAllNumbers]
-      );
-
-      useEffect(() => {
-        getAllNumbers();
+  useEffect(() => {
+    fetch("http://localhost:3001/players/list")
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setPlayers(responseJson.data);
       });
+  }, []);
+
+  let showCard = (id) => {
+    fetch(`http://localhost:3001/players/list/${id}`)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setPlayer(responseJson.data);
+        setList(false);
+        setCard(true);
+      });
+  };
+
+  let showList = () => {
+    setCard(false);
+    setList(true);
+  };
     
     return (
-        <div>
-           <button onClick={getAllNumbers}>Get All the Numbers</button><br/> 
-           <span className="title">Values</span>
-           <div className="values">
-            {values.map((value => <div className="value">{value}</div>))}
+      <div className="container">
+      {list ? (
+        <div className="list-group">
+          {players.map((player) => (
+            <li
+              onClick={() => showCard(player._id)}
+              className="list-group-item list-group-item-action"
+            >
+              {player.name}
+            </li>
+          ))}
         </div>
-        <form className="form" onSubmit={saveNumber}>
-        <label>Enter your value: </label>
-        <input
-          value={value}
-          onChange={event => {
-            setValue(event.target.value);
-          }}
-        />
-        <button>Submit</button>
-      </form>
-
+      ) : null}
+      {card ? (
+        <div class="card" style={{ width: "18rem" }}>
+          <div class="card-body">
+            <h5 class="card-title">{player.name}</h5>
+            <p class="card-text">{player.runs}</p>
+            <div onClick={() => showList()} class="btn btn-primary">
+              Back
+            </div>
+          </div>
         </div>
+      ) : null}
+    </div>
     )
 
 
